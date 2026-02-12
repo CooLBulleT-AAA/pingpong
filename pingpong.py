@@ -47,14 +47,24 @@ while game:
             game = False
     if finish != True:
         window.fill(back_color)
-        rocket1.reset()
-        rocket2.reset()
-        ball.reset()
         rocket1.update_l()
         rocket2.update_r()
+        ball.rect.x += ballIX
+        ball.rect.y += ballIY
         if sprite.collide_rect(rocket1,ball):
             ballIX *= -1
         if sprite.collide_rect(rocket2,ball):
             ballIX *= -1
+        if ball.rect.y < 0 or ball.rect.y > (height-50):
+            ballIY *= -1
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(loser1,(250,250))
+        if ball.rect.x > (width - 50):
+            finish = True
+            window.blit(loser2,(250,250))
+        rocket1.reset()
+        rocket2.reset()
+        ball.reset()
     display.update()
     clock.tick(FPS)
